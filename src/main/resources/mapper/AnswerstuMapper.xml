@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.answerstu.AnswerstuMapper">
+    <resultMap id="answerstu" type="com.example.demo.entity.answerstu.Answerstu">
+        <id property="anid" column="anid"/>
+        <result property="uid" column="uid"/>
+        <result property="pid" column="pid"/>
+        <result property="quid" column="quid"/>
+        <result property="sanswer" column="sanwer"/>
+        <result property="statement" column="statement"/>
+        <result property="teid" column="teid"/>
+        <result property="corrAns" column="corrAns"/>
+    </resultMap>
+
+    <select id="listAnswerstu" resultType="com.example.demo.entity.answerstu.Answerstu">
+SELECT * FROM t_answerstu
+  </select>
+
+    <insert id="addAnswerstu" parameterType="answerstu">
+INSERT INTO t_answerstu (anid,uid,pid,quid,sanswer,statement,teid,corrAns)
+values (#{answerstu.anid},#{answerstu.uid},#{answerstu.pid},#{answerstu.quid},#{answerstu.sanswer},#{answerstu.statement},#{answerstu.teid},#{answerstu.corrAns})
+    </insert>
+
+    <delete id="delAnswerstu" parameterType="answerstu">
+DELETE from t_answerstu WHERE anid=#{anid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration >
+    <!--参数配置-->
+    <Properties>
+        <!--日志文件根路径-->
+<!--        服务器路径-->
+        <property name="log_path" value="/opt/nies/logs"/>
+<!--        <property name="log_path" value="D:\All My Work\join\others\logs"/>-->
+    </Properties>
+
+    <!--日志输出目标-->
+    <Appenders>
+        <!--当前为dev环境时，该配置生效-->
+        <springProfile name="dev">
+            <!--控制台输出日志信息-->
+            <Console name="Console" target="SYSTEM_OUT">
+                <!--日志格式-->
+                <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -- %-5level -- [%thread] -- %logger{50} ---> %msg %n"/>
+            </Console>
+        </springProfile>
+
+        <!--日志文件输出debug级别日志信息-->
+<!--        <RollingFile name="debug_file" fileName="${log_path}\debug\exam_debug.log" filePattern="${log_path}\debug\exam_debug-%d{yyyy-MM-dd}-%i.log">-->
+<!--服务器路径-->
+        <RollingFile name="debug_file" fileName="${log_path}/debug/exam_debug.log" filePattern="${log_path}/debug/exam_debug-%d{yyyy-MM-dd}-%i.log">
+            <!--文件滚动策略-->
+            <Policies>
+                <!--基于时间的滚动策略，默认是1小时，我这里设置24小时滚动一次-->
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <!--基于大小的滚动策略-->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!--日志格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -- %-5level -- [%thread] -- %logger{50} ---> %msg %n"/>
+            <!--临界值过滤器-->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+        </RollingFile>
+
+        <!--日志文件输出日志信息-->
+<!--        <RollingFile name="info_file" fileName="${log_path}\info\exam_info.log" filePattern="${log_path}\info\exam_info-%d{yyyy-MM-dd}-%i.log">-->
+<!--       服务器路径-->
+        <RollingFile name="info_file" fileName="${log_path}/info/exam_info.log" filePattern="${log_path}/info/exam_info-%d{yyyy-MM-dd}-%i.log">
+            <!--文件滚动策略-->
+            <Policies>
+                <!--基于时间的滚动策略，默认是1小时，这里设置24小时滚动一次-->
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <!--基于大小的滚动策略-->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!--日志格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -- %-5level -- [%thread] -- %logger{50} ---> %msg %n"/>
+            <!--临界值过滤器-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+        </RollingFile>
+
+        <!--日志文件输出日志信息-->
+<!--        <RollingFile name="warn_file" fileName="${log_path}\warn\exam_warn.log" filePattern="${log_path}\warn\exam_warn-%d{yyyy-MM-dd}-%i.log">-->
+        <!--       服务器路径-->
+        <RollingFile name="warn_file" fileName="${log_path}/warn/exam_warn.log" filePattern="${log_path}/warn/exam_warn-%d{yyyy-MM-dd}-%i.log">
+            <!--文件滚动策略-->
+            <Policies>
+                <!--基于时间的滚动策略，默认是1小时，我这里设置24小时滚动一次-->
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <!--基于大小的滚动策略-->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!--日志格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -- %-5level -- [%thread] -- %logger{50} ---> %msg %n"/>
+            <!--临界值过滤器-->
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+        </RollingFile>
+
+        <!--日志文件输出日志信息-->
+<!--        <RollingFile name="error_file" fileName="${log_path}\error\exam_error.log" filePattern="${log_path}\error\exam_error-%d{yyyy-MM-dd}-%i.log">-->
+<!--        服务器路径-->
+        <RollingFile name="error_file" fileName="${log_path}/error/exam_error.log" filePattern="${log_path}/error/exam_error-%d{yyyy-MM-dd}-%i.log">
+            <!--文件滚动策略-->
+            <Policies>
+                <!--基于时间的滚动策略，默认是1小时，我这里设置24小时滚动一次-->
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <!--基于大小的滚动策略-->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!--日志格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} -- %-5level -- [%thread] -- %logger{50} ---> %msg %n"/>
+            <!--临界值过滤器-->
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!--配置输出sql语句-->
+        <logger name="org.apache.ibatis" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        
+        <!--只有在Root中引入appender，appender才会生效-->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="debug_file"/>
+            <AppenderRef ref="info_file"/>
+            <AppenderRef ref="warn_file"/>
+            <AppenderRef ref="error_file"/>
+        </Root>
+    </Loggers>
+</configuration>

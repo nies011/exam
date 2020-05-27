@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.blank.BlankMapper">
+    <resultMap id="admin" type="com.example.demo.entity.blank.Blank">
+        <id property="bid" column="bid"/>
+        <result property="content" column="content"/>
+        <result property="answer" column="answer"/>
+        <result property="pid" column="pid"/>
+    </resultMap>
+
+    <select id="listBlank" resultType="com.example.demo.entity.blank.Blank">
+SELECT * FROM t_blank
+  </select>
+
+    <insert id="addBlank" parameterType="blank">
+INSERT INTO t_blank (bid,content,answer,pid)
+values (#{blank.bid},#{blank.content},#{blank.answer},#{blank.pid})
+    </insert>
+
+    <delete id="delBlank" parameterType="blank"> DELETE from t_blank WHERE bid=#{bid}
+    </delete>
+
+    <update id="updateAnswer" parameterType="blank">
+update t_blank set answer=#{answer} WHERE bid=#{bid}
+    </update>
+
+</mapper>

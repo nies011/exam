@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.student.StudentMapper">
+    <resultMap id="testTry" type="com.example.demo.entity.student.Student">
+        <id property="uid" column="uid"/>
+        <result property="uname" column="uname"/>
+        <result property="pwd" column="pwd"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="uclass" column="uclass"/>
+    </resultMap>
+
+    <select id="listStudent" resultType="com.example.demo.entity.student.Student">
+SELECT * FROM t_student
+</select>
+
+    <insert id="addStudent">
+insert into t_student (uid,uname,pwd,phone,email,uclass)
+values (#{student.uid},#{student.uname},#{student.pwd},#{student.phone},#{student.email},#{student.uclass})
+    </insert>
+
+    <delete id="delStudent">
+DELETE from t_student where uid=#{uid}
+    </delete>
+
+    <update id="updatePwd">
+update t_student set pwd=#{pwd} WHERE uid=#{uid}
+    </update>
+
+</mapper>

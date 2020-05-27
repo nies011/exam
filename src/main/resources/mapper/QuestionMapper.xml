@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.question.QuestionMapper">
+    <resultMap id="admin" type="com.example.demo.entity.question.Question">
+        <id property="qid" column="qid"/>
+        <result property="content" column="content"/>
+        <result property="aoption" column="aoption"/>
+        <result property="boption" column="boption"/>
+        <result property="coption" column="coption"/>
+        <result property="doption" column="doption"/>
+        <result property="answer" column="answer"/>
+        <result property="pid" column="pid"/>
+    </resultMap>
+
+    <select id="listQuestion" resultType="com.example.demo.entity.question.Question">
+SELECT * FROM t_question
+    </select>
+
+    <insert id="addQuestion" parameterType="question">
+INSERT INTO t_question (qid,content,aoption,boption,coption,doption,answer,pid)
+values (#{question.qid},#{question.content},#{question.aoption},#{question.boption}
+,#{question.coption},#{question.doption},#{question.answer},#{question.pid})
+    </insert>
+
+    <delete id="delQuestion" parameterType="question">
+DELETE from t_question WHERE qid=#{qid}
+    </delete>
+
+    <update id="updateAnswer" parameterType="question">
+update t_question set answer=#{answer} WHERE qid=#{qid}
+    </update>
+
+
+</mapper>

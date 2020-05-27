@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.admin.AdminMapper">
+    <resultMap id="admin" type="com.example.demo.entity.admin.Admin">
+        <id property="aid" column="aid"/>
+        <result property="aname" column="aname"/>
+        <result property="pwd" column="pwd"/>
+    </resultMap>
+
+    <select id="listAdmin" resultType="com.example.demo.entity.admin.Admin">
+SELECT * FROM t_admin
+  </select>
+
+    <insert id="addAdmin" parameterType="admin">
+INSERT INTO t_admin (aid,aname,pwd) values (#{admin.aid},#{admin.aname},#{admin.pwd})
+    </insert>
+
+    <delete id="delAdmin" parameterType="admin">
+DELETE from t_admin WHERE aname=#{aname}
+    </delete>
+
+    <update id="updateAname" parameterType="admin">
+update t_admin set aname=#{aname} WHERE aid=#{aid}
+    </update>
+
+    <update id="updatePwd" parameterType="admin">
+update t_admin set pwd=#{pwd} WHERE aid=#{aid}
+    </update>
+
+
+</mapper>

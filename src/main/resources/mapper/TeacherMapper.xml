@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.teacher.TeacherMapper">
+    <resultMap id="testTry" type="com.example.demo.entity.teacher.Teacher">
+        <id property="tid" column="tid"/>
+        <result property="tname" column="tname"/>
+        <result property="pwd" column="pwd"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="listTeacher" resultType="com.example.demo.entity.teacher.Teacher">
+SELECT * FROM t_teacher
+  </select>
+
+    <delete id="delTeacher">DELETE from t_teacher WHERE tid=#{tId}
+    </delete>
+
+    <update id="updatePwd">
+update t_teacher set pwd=#{pwd} WHERE tid=#{tid}
+    </update>
+
+    <insert id="addTeacher">
+INSERT INTO t_teacher (tid,tname,pwd,phone,email) values (#{teacher.tid},#{teacher.tname},#{teacher.pwd},#{teacher.phone},#{teacher.email})
+    </insert>
+
+
+</mapper>

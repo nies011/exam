@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.tests.TestsMapper">
+    <resultMap id="tests" type="com.example.demo.entity.tests.Tests">
+        <id property="teId" column="teid"/>
+        <result property="uid" column="uid"/>
+        <result property="pid" column="pid"/>
+        <result property="startTime" column="starttime"/>
+        <result property="startTime" column="starttime"/>
+        <result property="time" column="time"/>
+        <result property="score" column="score"/>
+    </resultMap>
+
+    <select id="listTests" resultType="com.example.demo.entity.tests.Tests">
+SELECT * FROM t_tests
+  </select>
+
+    <insert id="addTests" parameterType="tests">
+INSERT INTO t_tests (teid,uid,pid,starttime,endtime,'time',score)
+values (#{tests.teId},#{tests.uid},#{tests.pid},#{tests.startTime},#{tests.endTime},#{tests.time},#{tests.score})
+    </insert>
+
+    <delete id="delTests" parameterType="tests">
+DELETE from t_tests WHERE teid=#{teId}
+    </delete>
+
+    <update id="updateScore" parameterType="tests">
+update t_tests set score=#{score} WHERE teid=#{teId}
+    </update>
+
+
+</mapper>

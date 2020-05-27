@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.200.135.43:3306/db_exam?autoReconnect=true&useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: Join666!
+server:
+  port: 8888
+
+mybatis:
+  type-aliases-package: com.example.demo.entity
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    #org.apache.ibatis.logging.stdout.StdOutImpl 控制台打印sql语句方便调试sql语句执行错误
+     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+     mapUnderscoreToCamelCase: true
+logging:
+  config:
+    classpath: log4j2-spring.xml
+  level:
+      com.example.demo.mapper: DEBUG
