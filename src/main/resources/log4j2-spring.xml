@@ -4,8 +4,8 @@
     <Properties>
         <!--日志文件根路径-->
 <!--        服务器路径-->
-        <property name="log_path" value="/opt/nies/logs"/>
-<!--        <property name="log_path" value="D:\All My Work\join\others\logs"/>-->
+<!--        <property name="log_path" value="/opt/nies/logs"/>-->
+        <property name="log_path" value="D:\All My Work\join\others\logs"/>
     </Properties>
 
     <!--日志输出目标-->
@@ -20,8 +20,7 @@
         </springProfile>
 
         <!--日志文件输出debug级别日志信息-->
-<!--        <RollingFile name="debug_file" fileName="${log_path}\debug\exam_debug.log" filePattern="${log_path}\debug\exam_debug-%d{yyyy-MM-dd}-%i.log">-->
-<!--服务器路径-->
+<!--服务器路径/本地路径-->
         <RollingFile name="debug_file" fileName="${log_path}/debug/exam_debug.log" filePattern="${log_path}/debug/exam_debug-%d{yyyy-MM-dd}-%i.log">
             <!--文件滚动策略-->
             <Policies>
@@ -38,8 +37,6 @@
         </RollingFile>
 
         <!--日志文件输出日志信息-->
-<!--        <RollingFile name="info_file" fileName="${log_path}\info\exam_info.log" filePattern="${log_path}\info\exam_info-%d{yyyy-MM-dd}-%i.log">-->
-<!--       服务器路径-->
         <RollingFile name="info_file" fileName="${log_path}/info/exam_info.log" filePattern="${log_path}/info/exam_info-%d{yyyy-MM-dd}-%i.log">
             <!--文件滚动策略-->
             <Policies>
@@ -56,8 +53,6 @@
         </RollingFile>
 
         <!--日志文件输出日志信息-->
-<!--        <RollingFile name="warn_file" fileName="${log_path}\warn\exam_warn.log" filePattern="${log_path}\warn\exam_warn-%d{yyyy-MM-dd}-%i.log">-->
-        <!--       服务器路径-->
         <RollingFile name="warn_file" fileName="${log_path}/warn/exam_warn.log" filePattern="${log_path}/warn/exam_warn-%d{yyyy-MM-dd}-%i.log">
             <!--文件滚动策略-->
             <Policies>
@@ -74,8 +69,6 @@
         </RollingFile>
 
         <!--日志文件输出日志信息-->
-<!--        <RollingFile name="error_file" fileName="${log_path}\error\exam_error.log" filePattern="${log_path}\error\exam_error-%d{yyyy-MM-dd}-%i.log">-->
-<!--        服务器路径-->
         <RollingFile name="error_file" fileName="${log_path}/error/exam_error.log" filePattern="${log_path}/error/exam_error-%d{yyyy-MM-dd}-%i.log">
             <!--文件滚动策略-->
             <Policies>

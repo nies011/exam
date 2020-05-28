@@ -1,7 +1,6 @@
 package com.example.demo.controller.user;
 
 import com.alibaba.fastjson.JSON;
-import com.example.demo.controller.Controller;
 import com.example.demo.entity.admin.Admin;
 import com.example.demo.entity.student.Student;
 import com.example.demo.entity.teacher.Teacher;
@@ -11,9 +10,6 @@ import com.example.demo.service.teacher.TeacherService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.http.HttpCookie;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

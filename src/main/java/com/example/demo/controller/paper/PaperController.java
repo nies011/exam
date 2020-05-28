@@ -186,6 +186,7 @@ public class PaperController {
         }
           answerstuService.addAnswerstu(answers.get(i));
         }
+
         return score;
     }
     @RequestMapping("listPaper")
