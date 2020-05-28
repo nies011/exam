@@ -1,6 +1,7 @@
 package com.example.demo.controller.paper;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.controller.Controller;
 import com.example.demo.entity.answerstu.Answerstu;
 import com.example.demo.entity.blank.Blank;
@@ -15,12 +16,10 @@ import com.example.demo.service.question.QuestionService;
 import com.example.demo.service.tests.TestsService;
 
 //import org.apache.log4j.Logger;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -248,17 +247,8 @@ public class PaperController {
      * @throws Exception null
      */
     @RequestMapping("addTests")
-    public boolean addTests(Tests tests) throws Exception{
-        //当开始时间和结束时间不为空时，计算考试所用总时长(秒为单位)
-        if(tests.getEndTime()!=null && tests.getStartTime()!=null){
-            Date start = tests.getStartTime();
-            Date end = tests.getEndTime();
-            long time = end.getTime()/1000-start.getTime()/1000;
-            tests.setTime(String.valueOf(time));
-        }
-        return testsService.addTests(tests);
-
-
+    public boolean addTests(@RequestBody String tests) throws Exception{
+        return testsService.addTests( JSONObject.parseObject(tests,Tests.class));
     }
 
 

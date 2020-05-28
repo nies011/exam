@@ -14,7 +14,7 @@ mybatis:
   mapper-locations: classpath*:mapper/*.xml
   configuration:
     #org.apache.ibatis.logging.stdout.StdOutImpl 控制台打印sql语句方便调试sql语句执行错误
-     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
      mapUnderscoreToCamelCase: true
 logging:
   config:

@@ -4,8 +4,8 @@
     <Properties>
         <!--日志文件根路径-->
 <!--        服务器路径-->
-<!--        <property name="log_path" value="/opt/nies/logs"/>-->
-        <property name="log_path" value="D:\All My Work\join\others\logs"/>
+        <property name="log_path" value="/opt/nies/logs"/>
+<!--        <property name="log_path" value="D:\All My Work\join\others\logs"/>-->
     </Properties>
 
     <!--日志输出目标-->
