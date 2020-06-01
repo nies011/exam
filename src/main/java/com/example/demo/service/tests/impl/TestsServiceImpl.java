@@ -25,25 +25,21 @@ public class TestsServiceImpl implements TestsService {
 
     @Override
     public List<Tests> listTests() throws Exception{
-        List<Tests> list = testsMapper.listTests();
-        return list;
+        return testsMapper.listTests();
     }
 
     @Override
     public boolean addTests(Tests tests) throws Exception{
-        boolean a = testsMapper.addTests(tests);
-        return a;
+        return testsMapper.addTests(tests);
     }
 
     @Override
     public boolean delTests(Integer teid) throws Exception{
-        boolean a = testsMapper.delTests(teid);
-        return a;
+        return testsMapper.delTests(teid);
     }
 
     @Override
     public boolean updateScore(Integer teid,int score) throws Exception{
-        boolean a = testsMapper.updateScore(teid,score);
-        return a;
+        return testsMapper.updateScore(teid,score);
     }
 }

@@ -2,12 +2,10 @@ package com.example.demo.controller.paper;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.controller.Controller;
 import com.example.demo.entity.answerstu.Answerstu;
 import com.example.demo.entity.blank.Blank;
 import com.example.demo.entity.paper.Paper;
 import com.example.demo.entity.question.Question;
-import com.example.demo.entity.teacher.Teacher;
 import com.example.demo.entity.tests.Tests;
 import com.example.demo.service.answerstu.AnswerstuService;
 import com.example.demo.service.blank.BlankService;
@@ -16,13 +14,15 @@ import com.example.demo.service.question.QuestionService;
 import com.example.demo.service.tests.TestsService;
 
 //import org.apache.log4j.Logger;
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.example.demo.util.file.TxtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -242,16 +242,93 @@ public class PaperController {
 
     /**添加考试记录
      *
-     * @param tests test
+     * @param test test
      * @return boolean
      * @throws Exception null
      */
     @RequestMapping("addTests")
-    public boolean addTests(@RequestBody String tests) throws Exception{
-        return testsService.addTests( JSONObject.parseObject(tests,Tests.class));
+    public boolean addTests(@RequestBody String test) throws Exception{
+//        System.out.println(test);
+//        test = test.split("data:")[1];
+//        System.out.println(test);
+        Tests tests = JSONObject.parseObject(test,Tests.class);
+//        System.out.println(11111);
+        //当开始时间和结束时间不为空时，计算考试所用总时长(秒为单位)
+//        if(tests.getEndTime()!=null && tests.getStartTime()!=null){
+//            Date start = tests.getStartTime();
+//            Date end = tests.getEndTime();
+//            long time = end.getTime()/1000-start.getTime()/1000;
+//            tests.setTime(String.valueOf(time));
+//        }
+//        System.out.println(tests.getEndTime()+"\\"+tests.getStartTime());
+
+        String start = tests.getStartTime().split(" ")[1];
+        System.out.println(start);
+        String end = tests.getEndTime().split(" ")[1];
+        System.out.println(end);
+        String[] starts = start.split(":");
+        String[] ends = end.split(":");
+        tests.setTime((Integer.parseInt(ends[0])-Integer.parseInt(starts[0]))*60+(Integer.parseInt(ends[1])-Integer.parseInt(starts[1])));
+//        System.out.println(Integer.parseInt(ends[0]));
+//        System.out.println(Integer.parseInt(ends[1]));
+//        System.out.println(Integer.parseInt(starts[0]));
+//        System.out.println(Integer.parseInt(starts[1]));
+//        System.out.println((Integer.parseInt(ends[0])-Integer.parseInt(starts[1]))*60);
+//        System.out.println((Integer.parseInt(ends[0])-Integer.parseInt(starts[1])));
+//        System.out.println(tests.getTime());
+        return testsService.addTests(tests);
+
+
     }
 
+    @RequestMapping("importBlanks")
+    public String importBlank(@RequestParam("file") MultipartFile bfile, int pid){
+        List<Blank> blanks ;
+        try{
+            blanks = TxtUtil.importBlank(bfile, pid);
+//            System.out.println("1111111111");
+            for (Blank blank:blanks
+            ) {
+//                System.out.println("-----------");
+                blankService.addBlank(blank);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            return "IoException";
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return "NullPointerException";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "Exception";
+        }
+        return "success";
+    }
 
+    @RequestMapping("importQues")
+    public String importQuestion(@RequestParam("file") MultipartFile file, int pid){
+        List<Question> questions;
+        try{
+            questions = TxtUtil.importQuestion(file, pid);
+//            System.out.println(questions.get(0));
+//            System.out.println("1111111111");
+            for (Question question:questions
+                 ) {
+//                System.out.println("-----------");
+                questionService.addQuestion(question);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            return "IoException";
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return "NullPointerException";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "Exception";
+        }
+        return "success";
+    }
     /**通过id删除考试记录
      *
      * @param teId id

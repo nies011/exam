@@ -1,7 +1,5 @@
 package com.example.demo.entity.tests;
 
-import java.util.Date;
-
 /**
  * @Author: Liuxj
  * @Description:
@@ -11,9 +9,9 @@ public class Tests {
     private Integer teId;
     private Integer uid;
     private Integer pid;
-    private Date startTime;
-    private Date endTime;
-    private String time;
+    private String startTime;
+    private String endTime;
+    private Integer time;
     private int score;
 
     public Integer getTeId() {
@@ -40,27 +38,27 @@ public class Tests {
         this.pid = pid;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public String getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 

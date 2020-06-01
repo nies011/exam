@@ -18,7 +18,7 @@ SELECT * FROM t_tests
   </select>
 
     <insert id="addTests" parameterType="tests">
-INSERT INTO t_tests (teid,uid,pid,starttime,endtime,'time',score)
+INSERT INTO t_tests (teid,uid,pid,starttime,endtime,time,score)
 values (#{tests.teId},#{tests.uid},#{tests.pid},#{tests.startTime},#{tests.endTime},#{tests.time},#{tests.score})
     </insert>
 

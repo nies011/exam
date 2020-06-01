@@ -2,23 +2,15 @@ package com.example.demo.controller.util;
 
 import com.example.demo.entity.student.Student;
 import com.example.demo.service.student.StudentService;
-import com.example.demo.util.enums.ExcelEnum;
-import com.example.demo.util.excel.ExcelUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.util.enums.FileEnum;
+import com.example.demo.util.file.ExcelUtil;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URLEncoder;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @Author: nie
@@ -47,11 +39,11 @@ public class excelController {
 
             for (int i = 0; i <= students.size(); i++) {
                 if (i == 0) {
-                    cellHash.put(0, ExcelEnum.STUDENT_ID.getMsg());
-                    cellHash.put(1,ExcelEnum.STUDENT_NAME.getMsg());
-                    cellHash.put(2,ExcelEnum.STUDENT_PHONE.getMsg());
-                    cellHash.put(3,ExcelEnum.STUDENT_EMAIL.getMsg());
-                    cellHash.put(4,ExcelEnum.STUDENT_CLASS.getMsg());
+                    cellHash.put(0, FileEnum.STUDENT_ID.getMsg());
+                    cellHash.put(1, FileEnum.STUDENT_NAME.getMsg());
+                    cellHash.put(2, FileEnum.STUDENT_PHONE.getMsg());
+                    cellHash.put(3, FileEnum.STUDENT_EMAIL.getMsg());
+                    cellHash.put(4, FileEnum.STUDENT_CLASS.getMsg());
                 }else{
                     cellHash.put(0,students.get(i-1).getUid());
                     cellHash.put(1,students.get(i-1).getUname());

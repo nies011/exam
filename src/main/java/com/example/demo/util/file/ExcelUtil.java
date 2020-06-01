@@ -1,7 +1,7 @@
-package com.example.demo.util.excel;
+package com.example.demo.util.file;
 
 
-import com.example.demo.util.enums.ExcelEnum;
+import com.example.demo.util.enums.FileEnum;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 /**
@@ -29,6 +30,17 @@ public class ExcelUtil {
 //            e.printStackTrace();
 //            return "fail";
 //        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=" +"学生信息.xls");
+        OutputStream out = null;
+        try {
+
+            //封装响应的输出流，用于向客户端输出Excel文件
+            out = response.getOutputStream();
+            data.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "success";
     }
 
@@ -37,8 +49,8 @@ public class ExcelUtil {
         HSSFSheet sheet ;
         HSSFRow row;
         HSSFCell cell;
-//        String path = ExcelEnum.EXCEL_PATH_WEB.getMsg();
-        String path = ExcelEnum.PATH_LOCAL.getMsg();
+//        String path = FileEnum.PATH_WEB.getMsg();
+        String path = FileEnum.PATH_LOCAL.getMsg();
         HashMap<Integer,String> nameHash = hashMap.get("name");
         HashMap<Integer,HashMap> sheetHash = hashMap.get("sheet");
         HashMap<Integer,HashMap> rowHash;
@@ -72,7 +84,7 @@ public class ExcelUtil {
                     }
                 }
             }
-            FileOutputStream outputStream = new FileOutputStream(path+"/"+name);
+            FileOutputStream outputStream = new FileOutputStream(path+name);
             workbook.write(outputStream);
             outputStream.flush();
             return "success";
