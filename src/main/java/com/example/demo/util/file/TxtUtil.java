@@ -82,12 +82,13 @@ public class TxtUtil {
             int n;
             File f;
             // 输出文件的新name
-//            System.out.println("getName:"+multiartFile.getName());
-            // 输出源文件名称
-//            System.out.println("Oriname:"+multipartFile.getOriginalFilename());
-            // 创建文件
-//            f = new File(FileEnum.PATH_LOCAL.getMsg()+"questions.txt");
-            f = new File(FileEnum.PATH_WEB.getMsg()+"questions.txt");
+            System.out.println("getName:"+multipartFile.getName());
+//            // 输出源文件名称
+            System.out.println("Oriname:"+multipartFile.getOriginalFilename());
+//            // 创建文件
+            f = new File(FileEnum.PATH_LOCAL.getMsg()+multipartFile.getOriginalFilename());
+//            System.out.println(multipartFile.getOriginalFilename());
+//            f = new File(FileEnum.PATH_WEB.getMsg()+multipartFile.getOriginalFilename());
             try (InputStream in  = multipartFile.getInputStream(); OutputStream os = new FileOutputStream(f)){
                 // 得到文件流。以文件流的方式输出到新文件
                 // 可以使用byte[] ss = multipartFile.getBytes();代替while

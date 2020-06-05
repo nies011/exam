@@ -9,10 +9,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,8 +137,8 @@ public class ExcelUtil {
 //        cell.setCellValue("test1");
     }
 
-    public static List<Student> readExcel(String inputFilePath) throws IOException {
-        FileInputStream fileInput = new FileInputStream(inputFilePath);//创建文件输入流
+    public static List<Student> readExcel(File inputFile) throws IOException {
+        FileInputStream fileInput = new FileInputStream(inputFile);//创建文件输入流
         HSSFWorkbook wb = new HSSFWorkbook(fileInput);//由输入流文件得到工作簿对象
         HSSFSheet sheet = wb.getSheetAt(0);//获取第一个sheet
         int lastRowNum = sheet.getLastRowNum(); //获取表格内容的最后一行的行数
@@ -154,24 +151,24 @@ public class ExcelUtil {
             int columnNum = row.getLastCellNum();//获取每一行的最后一列的列号，即总列数
             for (int j=0; j<columnNum; ++j) {
 //                //获取每个单元格
-//                switch(j){
-//                    case 0:
-//                        student.setUid(Integer.parseInt(row.getCell(j).toString()));
-//                        break;
-//                    case 1:
-//                        student.setUname(row.getCell(j).toString());
-//                        break;
-//                    case 2:
-//                        student.setPhone(row.getCell(j).toString());
-//                        break;
-//                    case 3:
-//                        student.setEmail(row.getCell(j).toString());
-//                        break;
-//                    case 4:
-//                        student.setUclass(row.getCell(j).toString());
-//                        break;
-//                }
-                System.out.println(row.getCell(j).toString());
+                switch(j){
+                    case 0:
+                        student.setUid(Integer.parseInt(row.getCell(j).toString()));
+                        break;
+                    case 1:
+                        student.setUname(row.getCell(j).toString());
+                        break;
+                    case 2:
+                        student.setPhone(row.getCell(j).toString());
+                        break;
+                    case 3:
+                        student.setEmail(row.getCell(j).toString());
+                        break;
+                    case 4:
+                        student.setUclass(row.getCell(j).toString());
+                        break;
+                }
+
 //                if (j == 0) {
 //                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //                    System.out.printf("%s\t", format.format(cell.getDateCellValue()));
@@ -180,8 +177,8 @@ public class ExcelUtil {
 //                } else {
 //                    System.out.printf("%s\t", cell.getStringCellValue());
 //                }
-                students.add(student);
             }
+            students.add(student);
         }
         wb.close();
         fileInput.close();

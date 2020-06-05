@@ -4,9 +4,11 @@ import com.example.demo.entity.student.Student;
 import com.example.demo.service.student.StudentService;
 import com.example.demo.util.enums.FileEnum;
 import com.example.demo.util.file.ExcelUtil;
+import com.example.demo.util.file.TxtUtil;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -93,12 +95,27 @@ public class excelController {
     }
 
     @RequestMapping("readExcel")
-    public void readExcel() throws Exception{
-//        List<Student> students =
-                ExcelUtil.readExcel("D:\\All My Work\\join\\others\\files\\学生信息.xls");
-//        for (Student s:students
-//             ) {
-//            studentService.addStudent(s);
-//        }
+    public void readExcel(MultipartFile multipartFile) throws Exception{
+        boolean jur;
+        List<Student> students = ExcelUtil.readExcel(TxtUtil.transport(multipartFile));
+        List<Student> studentList = studentService.listStudent();
+        for (Student s:students
+             ) {
+            jur = true;
+            if (studentList.equals(null)){
+                studentService.addStudent(s);
+            } else {
+                for (Student st:studentList
+                ) {
+                    if (s.getUid()==st.getUid()) {
+                        jur = false;
+                    }
+                }
+            }
+            if (jur){
+                studentService.addStudent(s);
+            }
+        }
+
     }
 }
