@@ -1,16 +1,22 @@
 package com.example.demo.util.file;
 
 
+import com.example.demo.entity.student.Student;
 import com.example.demo.util.enums.FileEnum;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: nie
@@ -31,7 +37,7 @@ public class ExcelUtil {
 //            return "fail";
 //        }
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" +"学生信息.xls");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
         OutputStream out = null;
         try {
 
@@ -44,7 +50,34 @@ public class ExcelUtil {
         return "success";
     }
 
-    public static String exportExcel(HashMap<String,HashMap> hashMap,String name,int width){
+    public static String exportExcel(HashMap<String, HashMap> hashMap, String name, int width) {
+        HSSFWorkbook workbook = getHSSFWork(hashMap, name, width);
+        //        String path = FileEnum.PATH_WEB.getMsg();
+        String path = FileEnum.PATH_LOCAL.getMsg();
+        try{
+            FileOutputStream outputStream = new FileOutputStream(path + name);
+            workbook.write(outputStream);
+            outputStream.flush();
+            return "success";
+        }catch(NullPointerException e){
+            e.printStackTrace();
+            return "NullPointerException";
+        }catch(
+                IOException e)
+
+        {
+            e.printStackTrace();
+            return "IOException";
+        }catch(
+                Exception e)
+
+        {
+            e.printStackTrace();
+            return "otherException";
+        }
+
+    }
+    public static HSSFWorkbook getHSSFWork(HashMap<String,HashMap> hashMap,String name,int width){
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet ;
         HSSFRow row;
@@ -84,22 +117,11 @@ public class ExcelUtil {
                     }
                 }
             }
-            FileOutputStream outputStream = new FileOutputStream(path+name);
-            workbook.write(outputStream);
-            outputStream.flush();
-            return "success";
-        }catch (NullPointerException e){
-            e.printStackTrace();
-            return "NullPointerException";
-        }catch (IOException e){
-            e.printStackTrace();
-            return "IOException";
         }catch (Exception e){
             e.printStackTrace();
-            return "otherException";
-        }
 
-
+    }
+        return workbook;
 //        for (int i = 0; i < ((HashMap)hashMap.get("sheetName")).size(); i++) {
 //            sheets.add(workbook.createSheet((String)((HashMap)hashMap.get("sheetName")).get(i)));
 //            for (int j = 0; j < ((HashMap)hashMap.get("sheet")).size(); j++) {
@@ -116,6 +138,54 @@ public class ExcelUtil {
 //        HSSFRow row = sheet.createRow(1);
 //        HSSFCell cell = row.createCell(1);
 //        cell.setCellValue("test1");
-
     }
+
+    public static List<Student> readExcel(String inputFilePath) throws IOException {
+        FileInputStream fileInput = new FileInputStream(inputFilePath);//创建文件输入流
+        HSSFWorkbook wb = new HSSFWorkbook(fileInput);//由输入流文件得到工作簿对象
+        HSSFSheet sheet = wb.getSheetAt(0);//获取第一个sheet
+        int lastRowNum = sheet.getLastRowNum(); //获取表格内容的最后一行的行数
+        List<Student> students = new ArrayList<>();
+        Student student  ;
+        //rowBegin代表要开始读取的行号，下面这个循环的作用是读取每一行内容
+        for (int i = 1; i <= lastRowNum; ++i) {
+            student = new Student();
+            HSSFRow row = sheet.getRow(i);//获取每一行
+            int columnNum = row.getLastCellNum();//获取每一行的最后一列的列号，即总列数
+            for (int j=0; j<columnNum; ++j) {
+//                //获取每个单元格
+//                switch(j){
+//                    case 0:
+//                        student.setUid(Integer.parseInt(row.getCell(j).toString()));
+//                        break;
+//                    case 1:
+//                        student.setUname(row.getCell(j).toString());
+//                        break;
+//                    case 2:
+//                        student.setPhone(row.getCell(j).toString());
+//                        break;
+//                    case 3:
+//                        student.setEmail(row.getCell(j).toString());
+//                        break;
+//                    case 4:
+//                        student.setUclass(row.getCell(j).toString());
+//                        break;
+//                }
+                System.out.println(row.getCell(j).toString());
+//                if (j == 0) {
+//                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                    System.out.printf("%s\t", format.format(cell.getDateCellValue()));
+//                } else if (CellType.NUMERIC.equals(cell.getCellTypeEnum())) {
+//                    System.out.printf("%.0f\t", cell.getNumericCellValue());
+//                } else {
+//                    System.out.printf("%s\t", cell.getStringCellValue());
+//                }
+                students.add(student);
+            }
+        }
+        wb.close();
+        fileInput.close();
+        return students;
+    }
+
 }

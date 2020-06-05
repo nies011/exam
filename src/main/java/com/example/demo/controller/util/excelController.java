@@ -62,6 +62,43 @@ public class excelController {
 
     @RequestMapping("downLoadStudent")
     public String downLoadStudent(HttpServletResponse response) throws Exception{
-        return "success";
+        List<Student> students = studentService.listStudent();
+        HashMap<Integer,Object> cellHash = new HashMap<>();
+        HashMap<Integer,HashMap> sheetHash = new HashMap<>();
+        HashMap<Integer,HashMap> rowHash = new HashMap<>();
+        HashMap<Integer,String> nameHash = new HashMap<>();
+        HashMap<String,HashMap> hashMap = new HashMap<>();
+
+        for (int i = 0; i <= students.size(); i++) {
+            if (i == 0) {
+                cellHash.put(0, FileEnum.STUDENT_ID.getMsg());
+                cellHash.put(1, FileEnum.STUDENT_NAME.getMsg());
+                cellHash.put(2, FileEnum.STUDENT_PHONE.getMsg());
+                cellHash.put(3, FileEnum.STUDENT_EMAIL.getMsg());
+                cellHash.put(4, FileEnum.STUDENT_CLASS.getMsg());
+            }else{
+                cellHash.put(0,students.get(i-1).getUid());
+                cellHash.put(1,students.get(i-1).getUname());
+                cellHash.put(2,students.get(i-1).getPhone());
+                cellHash.put(3,students.get(i-1).getEmail());
+                cellHash.put(4,students.get(i-1).getUclass());
+            }
+            rowHash.put(i,(HashMap)cellHash.clone());
+        }
+        sheetHash.put(0,rowHash);
+        nameHash.put(0,"学生信息");
+        hashMap.put("name",nameHash);
+        hashMap.put("sheet",sheetHash);
+        return ExcelUtil.downloadExcel(response,"学生信息.xls",ExcelUtil.getHSSFWork(hashMap,"学生信息.xls",15));
+    }
+
+    @RequestMapping("readExcel")
+    public void readExcel() throws Exception{
+//        List<Student> students =
+                ExcelUtil.readExcel("D:\\All My Work\\join\\others\\files\\学生信息.xls");
+//        for (Student s:students
+//             ) {
+//            studentService.addStudent(s);
+//        }
     }
 }
